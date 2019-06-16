@@ -1,0 +1,13 @@
+.idea
+*.json
+tokens
+.gradle
+gradlew
+gradlew.bat
+build
+gradle
+ConstTeleg
+*/main/java/ConstTeleg.java
+
+
+
