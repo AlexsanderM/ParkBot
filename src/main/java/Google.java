@@ -10,6 +10,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
+import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.FileNotFoundException;
@@ -31,7 +32,7 @@ public class Google {
 
     final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
     final String spreadsheetId = "1MLOtDWajBvk6r8foPniGIgZLSh762G0TKwE94AK9baw";
-    String range = "Olonecki ckver!";
+    String range = "Олонецкий сквер!";
 
     public Google() throws GeneralSecurityException, IOException {
     }
@@ -75,5 +76,21 @@ public class Google {
                 System.out.println(row.get(0));
             }
         }
+    }
+
+    public void addValueTable(String column, Integer row, String valueCell) throws IOException {
+        range += column + row;
+
+        Sheets service = new Sheets.Builder(HTTP_TRANSPORT, Google.JSON_FACTORY, Google.getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(Google.APPLICATION_NAME)
+                .build();
+
+        ValueRange value = new ValueRange().setValues(Arrays.asList(Arrays.asList(valueCell)));
+
+        UpdateValuesResponse update = service.spreadsheets().values()
+                .update(spreadsheetId, range, value)
+                .setValueInputOption("RAW").execute();
+
+        range = "Олонецкий сквер!";
     }
 }

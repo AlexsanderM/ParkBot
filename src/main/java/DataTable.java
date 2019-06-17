@@ -13,7 +13,6 @@ public class DataTable {
 
         for (int i = 1; i < 1620; i += 18) {
             Date date = calendar.getTime();
-            System.out.println(date);
 
             map.put(date, i);
             calendar.add(Calendar.DAY_OF_MONTH, +1);
@@ -40,5 +39,21 @@ public class DataTable {
         }
 
         return rowValue;
+    }
+
+    public Integer getRowTime(Integer rowDate) {
+        Calendar calendar = Calendar.getInstance();
+        int timeHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int rowTime = 0;
+        int rowTable = 3;
+
+        for (int i = 8; i < 22; i++) {
+            if (timeHour == i) {
+                rowTime = rowDate + rowTable;
+            }
+            rowTable++;
+        }
+
+        return rowTime;
     }
 }
